@@ -38,8 +38,8 @@ const AppSelectControl=({label,name,options,required,...rest})=>{
             message:`Please Select ${label}`
           }
         ]}
-        {...rest}>
-          <Select placeholder={`Select ${label}`}>
+        >
+          <Select placeholder={`Select ${label}`} {...rest}>
             {
               options && options.map(x=>(
                 <Select.Option key={x.id} value={x.id}>{x.name}</Select.Option>

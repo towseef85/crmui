@@ -5,6 +5,7 @@ import Error403 from './errorPages/Error403';
 import React from 'react';
 import { marketingPages } from './marketing';
 import { settingPages } from './settings';
+import { orderPages } from './orders';
 import Error404 from './errorPages/Error404';
 import {profileConfig} from './profile';
 import './index.style.less';
@@ -14,7 +15,11 @@ import './index.style.less';
 const authorizedStructure = {
   fallbackPath: '/signin',
   unAuthorizedComponent: <Error403 />,
-  routes: [...settingPages,...marketingPages, ...profileConfig],
+  routes: [
+    ...settingPages,
+    ...marketingPages, 
+    ...profileConfig,
+    ...orderPages],
 };
 
 const unAuthorizedStructure = {

@@ -1,6 +1,7 @@
 import React from 'react';
-import { BiGroup, BiTrip} from 'react-icons/bi';
+import { BiGroup, BiTrip, BiSolidUserAccount, BiUser} from 'react-icons/bi';
 import { MdOutlineAnalytics, MdOutlineDeliveryDining, MdPriceCheck } from 'react-icons/md';
+import {TbTruckDelivery} from 'react-icons/tb'
 
 const routesConfig = [
   {
@@ -46,7 +47,7 @@ const routesConfig = [
         messageId: 'sidebar.orders.vendors',
         type: 'item',
         icon: <BiGroup />,
-        path: '/marketing/vendors',
+        path: '/order/vendororders',
       },
       {
         id: 'orders.drivers',
@@ -54,7 +55,7 @@ const routesConfig = [
         messageId: 'sidebar.orders.drivers',
         type: 'item',
         icon: <MdOutlineDeliveryDining />,
-        path: '/marketing/drivers',
+        path: '/order/driverorders',
       },
     ],
   },
@@ -66,7 +67,7 @@ const routesConfig = [
     children: [
       {
         id: 'settings.prices',
-        title: 'Vendors',
+        title: 'Prices',
         messageId: 'sidebar.settings.prices',
         type: 'item',
         icon: <MdPriceCheck />,
@@ -74,11 +75,43 @@ const routesConfig = [
       },
       {
         id: 'settings.trips',
-        title: 'Drivers',
+        title: 'Trips',
         messageId: 'sidebar.settings.trips',
         type: 'item',
         icon: <BiTrip />,
         path: '/setting/trips',
+      },
+      {
+        id: 'settings.users',
+        title: 'Users',
+        messageId: 'sidebar.settings.users',
+        type: 'item',
+        icon: <BiUser />,
+        path: '/setting/user',
+      }
+    ],
+  },
+  {
+    id: 'accounts',
+    title: 'Accounts',
+    messageId: 'sidebar.account',
+    type: 'group',
+    children: [
+      {
+        id: 'accounts.vendor',
+        title: 'Vendor Account',
+        messageId: 'sidebar.account.vendor',
+        type: 'item',
+        icon: <BiSolidUserAccount />,
+        path: '/account/vendor',
+      },
+      {
+        id: 'accounts.driver',
+        title: 'Driver Accounts',
+        messageId: 'sidebar.account.driver',
+        type: 'item',
+        icon: <TbTruckDelivery />,
+        path: '/account/driver',
       },
     ],
   }
