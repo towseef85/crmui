@@ -7,6 +7,17 @@ import { useLocation } from 'react-router-dom';
 
 export default function AppListView({columns, data, title,loading, navigateTo}) {
     const location = useLocation()
+    const columnsList =[{
+      title:'#',
+      dataIndex:'id',
+      render:(j,i, index)=>(
+          <>{index+1}</>
+      )
+      
+    },
+    ...columns
+      
+    ]
   return (
     <>
     <AppsHeader
@@ -23,7 +34,7 @@ export default function AppListView({columns, data, title,loading, navigateTo}) 
             className='order-table'
             hoverColor
             data={data}
-            columns={columns}
+            columns={columnsList}
             loading={loading}
             />
     </AppsContent>

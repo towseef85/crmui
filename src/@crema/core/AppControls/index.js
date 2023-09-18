@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Switch, Form, InputNumber, Upload, Button, Input } from 'antd'
+import { Switch, Form, InputNumber, Upload, Button, Input, Select } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 
 const AppSwitchControl=({label, name, valuePropName,initialValue=true, ...rest})=>{
@@ -27,8 +27,35 @@ AppSwitchControl.propTypes={
     valuePropName:PropTypes.any,
     initialValue:PropTypes.bool
 }
-
-const AppInputNumberControl=({label, name, min=1,max=20, defaultValue=1, required, ...rest })=>{
+const AppSelectControl=({label,name,options,required,...rest})=>{
+    return(
+      <Form.Item
+        label={label}
+        name={name}
+        rules={[
+          {
+            required:required,
+            message:`Please Select ${label}`
+          }
+        ]}
+        {...rest}>
+          <Select placeholder={`Select ${label}`}>
+            {
+              options && options.map(x=>(
+                <Select.Option key={x.id} value={x.id}>{x.name}</Select.Option>
+              ))
+            }
+          </Select>
+        </Form.Item>
+    )
+}
+AppSelectControl.propTypes={
+  label:PropTypes.string,
+  name:PropTypes.string,
+  options:PropTypes.array,
+  required:PropTypes.bool
+}
+const AppInputNumberControl=({label, name, min=1,max=100000000, defaultValue=1, required, ...rest })=>{
 return(
   <Form.Item
   label={label}
@@ -43,7 +70,7 @@ return(
   ]}
   {...rest}
 >
-  <InputNumber min={min} max={max}/>
+  <InputNumber style={{width:'90%'}} min={min} max={max}/>
   </Form.Item>
 )
 }
@@ -193,7 +220,8 @@ const AppControls ={
     AppSwitchControl,
     AppInputNumberControl,
     AppInputControl,
-    AppUploadControl
+    AppUploadControl,
+    AppSelectControl
 }
 
 export default AppControls;

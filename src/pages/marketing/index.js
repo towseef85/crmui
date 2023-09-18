@@ -4,6 +4,7 @@ import {RoutePermittedRole} from '../../shared/constants/AppEnums';
 const Vendors = React.lazy(()=> import('./vendors'))
 const AddVendor = React.lazy(()=> import('./vendors/CreateVendor'))
 const Drivers = React.lazy(()=> import('./drivers'))
+const AddDriver = React.lazy(() => import('./drivers/CreateDriver'))
 const Dashboard = React.lazy(() => import('../dashboard'))
 
 export const marketingPages = [
@@ -21,6 +22,11 @@ export const marketingPages = [
       permittedRole: RoutePermittedRole.user,
       path: '/marketing/drivers',
       element: <Drivers />,
+    },
+    {
+      permittedRole: RoutePermittedRole.user,
+      path: ['/marketing/drivers/create','/marketing/drivers/create/:id'],
+      element: <AddDriver />,
     },
     {
       permittedRole: RoutePermittedRole.user,

@@ -1,32 +1,32 @@
+import React,{useEffect} from 'react'
 import { onGetList } from 'redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
-import { GET_DRIVERS } from 'shared/constants/ActionTypes'
+import { GET_PRICES } from 'shared/constants/ActionTypes'
+import PriceDetails from './PriceDetails'
+import PriceList from './PriceList'
 import AppPageMetadata from '@crema/core/AppPageMetadata'
 import AppsContainer from '@crema/core/AppsContainer'
 import {useParams} from 'react-router-dom';
-import DriverDetails from './DriverDetails'
-import DriverList from './DriverList'
-import { useEffect } from 'react'
 
-export default function Drivers() {
+export default function Prices() {
   const dispatch = useDispatch()
-  const {driverList} = useSelector(({general})=> general)
+  const {priceList} = useSelector(({general})=> general)
   const {loading} = useSelector(({common}) => common);
   const {id} = useParams();
   useEffect(()=>{
-    dispatch(onGetList('Driver',GET_DRIVERS))
+    dispatch(onGetList('Price',GET_PRICES))
   },[])
   const onGetMainComponent =()=>{
     if(id){    
-      return <DriverDetails id={id} loading={loading}/>
+      return <PriceDetails id={id} loading={loading}/>
     } else{
-      return <DriverList loading={loading} driverList={driverList}/>
+      return <PriceList loading={loading} priceList={priceList}/>
     }
   }
     return (
       <>
-      <AppPageMetadata title="Drivers"/>
-      <AppsContainer title="Drivers" type='bottom' fullView>
+      <AppPageMetadata title="Prices"/>
+      <AppsContainer title="Prices" type='bottom' fullView>
   
       {onGetMainComponent()}
       </AppsContainer>

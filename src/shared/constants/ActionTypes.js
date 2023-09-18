@@ -13,6 +13,18 @@ export const POST_VENDORS="POST_VENDORS";
 export const PUT_VENDORS="PUT_VENDORS";
 export const DELETE_VENDORS="DELETE_VENDORS";
 
+//DRIVERS
+export const GET_DRIVERS="GET_DRIVERS";
+export const POST_DRIVER="POST_DRIVER";
+export const PUT_DRIVER="PUT_DRIVER";
+export const DELETE_DRIVER="DELETE_DRIVER";
+
+//SETTINGS
+export const GET_PRICES='GET_PRICES';
+export const POST_PRICES='POST_PRICES';
+export const PUT_PRICES='PUT_PRICES';
+export const DELETE_PRICES='DELETE_PRICES';
+
 //APP SETTING
 export const TOGGLE_NAV_COLLAPSED = 'toggle_nav_collapsed';
 export const SET_INITIAL_PATH = 'set_initial_path';

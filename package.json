@@ -82,6 +82,7 @@
     "simplebar-react": "^2.3.6",
     "slick-carousel": "^1.8.1",
     "use-url-search-params": "^2.3.13",
+    "uuid": "^3.4.0",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

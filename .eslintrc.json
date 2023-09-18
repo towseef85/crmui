@@ -16,6 +16,7 @@
   "plugins": ["prettier", "react"],
   "rules": {
     // add rules
+    "no-debugger":"off",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "react/display-name": "off",

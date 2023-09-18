@@ -1,6 +1,6 @@
 import React from 'react';
-import { BiGroup} from 'react-icons/bi';
-import { MdOutlineAnalytics, MdOutlineDeliveryDining } from 'react-icons/md';
+import { BiGroup, BiTrip} from 'react-icons/bi';
+import { MdOutlineAnalytics, MdOutlineDeliveryDining, MdPriceCheck } from 'react-icons/md';
 
 const routesConfig = [
   {
@@ -49,12 +49,36 @@ const routesConfig = [
         path: '/marketing/vendors',
       },
       {
-        id: 'drivers',
+        id: 'orders.drivers',
         title: 'Drivers',
         messageId: 'sidebar.orders.drivers',
         type: 'item',
         icon: <MdOutlineDeliveryDining />,
         path: '/marketing/drivers',
+      },
+    ],
+  },
+  {
+    id: 'settings',
+    title: 'Settings',
+    messageId: 'sidebar.settings',
+    type: 'group',
+    children: [
+      {
+        id: 'settings.prices',
+        title: 'Vendors',
+        messageId: 'sidebar.settings.prices',
+        type: 'item',
+        icon: <MdPriceCheck />,
+        path: '/setting/prices',
+      },
+      {
+        id: 'settings.trips',
+        title: 'Drivers',
+        messageId: 'sidebar.settings.trips',
+        type: 'item',
+        icon: <BiTrip />,
+        path: '/setting/trips',
       },
     ],
   }
