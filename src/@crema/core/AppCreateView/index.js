@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {onPost} from 'redux/actions';
+import {onPost,onUpdateRecord} from 'redux/actions';
 import AppsContent from '../AppsContainer/AppsContent';
 import AppAnimateGroup from '../AppAnimateGroup';
 import AppsContainer from '../AppsContainer';
@@ -9,12 +9,12 @@ import AppIconButton from '../AppIconButton';
 import { useDispatch } from 'react-redux';
 import {BiArrowBack} from 'react-icons/bi';
 import {Button, Form, Space, message} from 'antd';
+import { useNavigate } from 'react-router-dom';
 import {
   CloseOutlined,
   PlusCircleOutlined,
   RollbackOutlined,
 } from '@ant-design/icons';
-import {useNavigate} from 'react-router-dom';
 
 export default function AppCreateView({
   title,
@@ -26,28 +26,46 @@ export default function AppCreateView({
   controller,
   othervalues=null,
   action,
+  id,
   hasCondition = false,
   conditionMessage = null,
+  initialValues=null,
   ...rest
 }) {
   const navigate = useNavigate();
   const dispatch=useDispatch()
   const [formName] = Form.useForm();
   const onFinish = (values) => {
-    debugger;
     if (hasCondition) return message.error(conditionMessage);
-    if(othervalues){
-      let newValues ={...values, ...othervalues}
-      dispatch(onPost(newValues,controller,action,formName))
+    debugger;
+    if(id){
+      if(othervalues){
+        let newValues ={...values, ...othervalues,id:id}
+        dispatch(onUpdateRecord(id,controller,newValues,navigate))
+      }
+      else{
+        let newValues ={...values,id:id}
+        dispatch(onUpdateRecord(id,controller,newValues,navigate))
+      }
     }
     else{
-      dispatch(onPost(values,controller,action,formName))
+      if(othervalues){
+        let newValues ={...values, ...othervalues}
+        dispatch(onPost(newValues,controller,action,formName))
+      }
+      else{
+        dispatch(onPost(values,controller,action,formName))
+      }
     }
+
+    
   };
   const onFinishFailed = () => {};
+  console.log("initialValues",initialValues);
+  if(initialValues) formName.setFieldsValue(initialValues)
   return (
     <>
-      <AppPageMetadata title={title} />
+ <AppPageMetadata title={title} />
       <AppsContainer title={title} type='right' fullView>
         <div className='mail-detail'>
           <Form
@@ -79,12 +97,13 @@ export default function AppCreateView({
                     loading={loading}
                     htmlType='submit'
                     icon={<PlusCircleOutlined />}>
-                    {`Create ${title}`}
+                    {!id ? `Create ${title}` : `Update ${title}`}
                   </Button>
                   <Button
                     icon={<RollbackOutlined />}
                     onClick={() => formName.resetFields()}
                     type='default'
+                    disabled={id}
                     loading={loading}>
                     Reset
                   </Button>
@@ -122,5 +141,7 @@ AppCreateView.propTypes = {
   action: PropTypes.string,
   hasCondition: PropTypes.bool,
   conditionMessage: PropTypes.string,
-  othervalues:PropTypes.any
+  othervalues:PropTypes.any,
+  initialValues:PropTypes.any,
+  id:PropTypes.string,
 };

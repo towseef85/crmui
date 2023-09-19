@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Switch, Form, InputNumber, Upload, Button, Input, Select } from 'antd'
+import { Switch, Form, InputNumber, Upload, Button, Input, Select, TimePicker } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
+import moment from 'moment';
+
 
 const AppSwitchControl=({label, name, valuePropName,initialValue=true, ...rest})=>{
     return(
@@ -83,6 +85,44 @@ AppInputNumberControl.propTypes={
     required:PropTypes.bool,
 }
 
+const AppTimePickerControl=({
+  name,
+  label,
+  required = false,
+  timeRange, setTimeRange,
+  ...rest
+})=>{
+  const format="HH:mm";
+  return (
+    <Form.Item
+      label={label}
+      name={name}
+      hasFeedback
+      rules={[
+        {
+          required: required,
+          message: `Please Enter ${label}`,
+        }
+      ]}
+      {...rest}
+    >
+    <TimePicker.RangePicker value={moment(timeRange,format)}
+    onChange={(time, timeString)=>{
+      console.log(time);
+      setTimeRange(moment(timeString,format))
+    }}
+     format={format}/>
+    </Form.Item>
+  );
+}
+
+AppTimePickerControl.propTypes={
+    label:PropTypes.string,
+    name:PropTypes.string,
+    required:PropTypes.bool,
+    timeRange:PropTypes.any,
+    setTimeRange:PropTypes.any
+}
 const AppInputControl=({
   name,
   label,
@@ -221,7 +261,8 @@ const AppControls ={
     AppInputNumberControl,
     AppInputControl,
     AppUploadControl,
-    AppSelectControl
+    AppSelectControl,
+    AppTimePickerControl
 }
 
 export default AppControls;

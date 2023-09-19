@@ -20,7 +20,7 @@ export const marketingPages = [
     },
     {
       permittedRole: RoutePermittedRole.user,
-      path: '/marketing/drivers',
+      path: ['/marketing/drivers','/marketing/drivers/:id'],
       element: <Drivers />,
     },
     {
