@@ -1,9 +1,35 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Switch, Form, InputNumber, Upload, Button, Input, Select, TimePicker } from 'antd'
+import { Switch, Form, InputNumber, Upload,DatePicker, Button, Input, Select, TimePicker } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import moment from 'moment';
 
+const AppDatePickerControl=({label, name, required=false, ...rest})=>{
+  return(
+      <Form.Item
+      label={label}
+      name={name}
+      getValueProps={(value) => {
+        return { value: moment(value) };
+      }}
+      rules={[
+        {
+          required:required,
+          message:`Please Select ${label}`
+        }
+      ]}
+     {...rest}
+    >
+      <DatePicker style={{width: '100%'}} format='DD/M/YYYY' />
+    </Form.Item>
+  )
+
+}
+AppDatePickerControl.propTypes={
+  label:PropTypes.string,
+  name:PropTypes.string,
+  required:PropTypes.bool
+}
 
 const AppSwitchControl=({label, name, valuePropName,initialValue=true, ...rest})=>{
     return(
@@ -41,7 +67,7 @@ const AppSelectControl=({label,name,options,required,...rest})=>{
           }
         ]}
         >
-          <Select placeholder={`Select ${label}`} {...rest}>
+          <Select  placeholder={`Select ${label}`} {...rest}>
             {
               options && options.map(x=>(
                 <Select.Option key={x.id} value={x.id}>{x.name}</Select.Option>
@@ -262,7 +288,8 @@ const AppControls ={
     AppInputControl,
     AppUploadControl,
     AppSelectControl,
-    AppTimePickerControl
+    AppTimePickerControl,
+    AppDatePickerControl
 }
 
 export default AppControls;

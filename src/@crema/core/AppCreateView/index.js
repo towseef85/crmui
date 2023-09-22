@@ -144,4 +144,6 @@ AppCreateView.propTypes = {
   othervalues:PropTypes.any,
   initialValues:PropTypes.any,
   id:PropTypes.string,
+  watchValue:PropTypes.any,
+  retunvalue:PropTypes.any
 };

@@ -1,52 +1,71 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import AppControls from '@crema/core/AppControls';
-import {POST_VENDORORDER} from 'shared/constants/ActionTypes';
+import {
+  GET_DRIVERS,
+  GET_VENDORPRICES,
+  GET_VENDORS,
+  POST_VENDORORDER,
+} from 'shared/constants/ActionTypes';
 import {Col, Form, Row} from 'antd';
-import {useDispatch} from 'react-redux';
-import PropTypes from 'prop-types';
+import {useDispatch, useSelector} from 'react-redux';
 import AppCrudHeader from '@crema/core/AppCrudHeader';
-import {onGetSingleVendorOrder, onPost, onUpdateRecord} from 'redux/actions';
-import {useNavigate} from 'react-router-dom';
+import {
+  onGetList,
+  onGetSingleRecordAsync,
+  onPost,
+  onUpdateRecord,
+} from 'redux/actions';
+import {useNavigate, useParams} from 'react-router-dom';
 
-export default function CreateVendorOrder({
-  id,
-  vendorList,
-  driverList,
-  singleOrder,
-  isSamePickUpAddress,
-  setIsSamePickUpAddress,
-  handleVendorPrice,
-  vendorPriceList,
-  setSingleOrder,
-  loading,
-}) {
+export default function CreateOrder() {
   const {
     AppInputControl,
     AppSelectControl,
     AppSwitchControl,
     AppInputNumberControl,
   } = AppControls;
-  useEffect(() => {
-    if (id) {
-      //dispatch(onGetSingleRecord('Order',id,setSingleOrder))
-      dispatch(onGetSingleVendorOrder(id, setSingleOrder));
-    }
-  }, [id]);
   const dispatch = useDispatch();
+  const [isSamePickUpAddress, setIsSamePickUpAddress] = useState(true);
   const navigate = useNavigate();
   const [vendorForm] = Form.useForm();
+  const {driverList, vendorPriceList} = useSelector(({general}) => general);
+  const {vendorList} = useSelector(({marketing}) => marketing);
+  const {loading} = useSelector(({common}) => common);
+  const [singleOrder, setSingleOrder] = useState(null);
+  const {id} = useParams();
+  useEffect(async () => {
+    if (id) {
+      const record = await onGetSingleRecordAsync(id);
+      const data = record.data?.data;
+      //dispatch(onGetSingleVendorOrder(id, record));
+      console.log(data);
+      setSingleOrder(data);
+      if (record) vendorForm.setFieldsValue(data);
+    }
+    dispatch(onGetList('Vendor', GET_VENDORS));
+    dispatch(onGetList('Driver', GET_DRIVERS));
+  }, [id]);
+  const handleVendorPrice = (value) => {
+    getPrices(value);
+  };
+  const getPrices = (value) => {
+    dispatch(onGetList(`Vendor/GetVendorPrices/${value}`, GET_VENDORPRICES));
+  };
   const vendorOptions = vendorList.map((x) => {
     return {id: x.id, name: `${x.storeName}-${x.ownerName}`};
   });
+  const vendorprice = vendorPriceList
+    ? vendorPriceList.map((x) => {
+        return {
+          id: x?.priceId,
+          name: `${x?.price.km}KM - SAR ${x?.price.prices}`,
+        };
+      })
+    : [];
   const driverOptions = driverList.map((x) => {
     return {id: x.id, name: x.name};
   });
-  const vendorprice = vendorPriceList
-    ? vendorPriceList.map((x) => {
-        return {id: x.priceId, name: `${x.price.km}KM - SAR ${x.price.prices}`};
-      })
-    : [];
-
+  console.log('singleOrder', singleOrder);
   const onFinish = (values) => {
     if (id) {
       let newValues = {...values, id: id};
@@ -56,15 +75,12 @@ export default function CreateVendorOrder({
     }
   };
   const deliveryType = Form.useWatch('deliveryType', vendorForm);
-
   return (
     <div className='mail-detail'>
       <Form
         name='basic'
         form={vendorForm}
         onFinish={onFinish}
-        disabled={loading}
-        initialValues={singleOrder}
         labelCol={{
           span: 8,
         }}
@@ -168,20 +184,3 @@ export default function CreateVendorOrder({
     </div>
   );
 }
-CreateVendorOrder.propTypes = {
-  id: PropTypes.string,
-  vendorList: PropTypes.array,
-  driverList: PropTypes.array,
-  singleOrder: PropTypes.any,
-  handleDeliveryTypeChange: PropTypes.func,
-  showCODChargers: PropTypes.bool,
-  isSamePickUpAddress: PropTypes.any,
-  setIsSamePickUpAddress: PropTypes.any,
-  vendorPriceList: PropTypes.array,
-  handleVendorPrice: PropTypes.func,
-  setShowCODChargers: PropTypes.any,
-  getPrices: PropTypes.func,
-  setVendorPrices: PropTypes.any,
-  loading: PropTypes.bool,
-  setSingleOrder: PropTypes.any,
-};

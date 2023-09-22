@@ -1,9 +1,10 @@
-import { GET_VENDORS, POST_VENDORS, PUT_VENDORS, DELETE_VENDORS } from "../../shared/constants/ActionTypes";
+import { GET_VENDORS, POST_VENDORS, PUT_VENDORS, DELETE_VENDORS,GET_VENDORORDERSINGLE } from "../../shared/constants/ActionTypes";
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
 
 const initialState = {
     vendorList:[],
+    singleorder:null
   }
 
   const marketingReducer=(state = initialState, action)=>{
@@ -13,6 +14,7 @@ const initialState = {
             ...state,
             vendorList: action.payload,
           };
+        
         case POST_VENDORS:
           return {
             ...state,
@@ -30,7 +32,10 @@ const initialState = {
                 ...state,
                 vendorList:[...getData]
             }
-        }
+          }
+        case GET_VENDORORDERSINGLE:
+            return{...state, singleorder:action.payload}
+        
         default:
           return state;
       }

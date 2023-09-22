@@ -9,6 +9,7 @@ DELETE_DRIVER,
 GET_VENDORORDERS,
 POST_VENDORORDER,
 PUT_VENDORORDER,
+GET_VENDORPRICES,
 DELETE_VENDORORDER
 } from "../../shared/constants/ActionTypes";
 
@@ -17,11 +18,18 @@ export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
 const initialState = {
     priceList:[],
     driverList:[],
-    vendorOrderList:[]
+    vendorOrderList:[],
+    vendorPriceList:[]
   }
 
   const generalReducer=(state = initialState, action)=>{
     switch (action.type) {
+       case GET_VENDORPRICES:
+        return {
+          ...state,
+          vendorPriceList:action.payload
+        }
+       
         case GET_PRICES:
           return {
             ...state,
@@ -54,7 +62,7 @@ const initialState = {
         case POST_DRIVER:
           return {
             ...state,
-            driverList: [...state.driverList, {...action.payload}],
+            driverList: [...state.driverList],
           };
         case PUT_DRIVER:{
           const getData= state.driverList.filter(x=>x.id !== action.payload.id)

@@ -4,7 +4,7 @@ import AppListView from '@crema/core/AppListView';
 import AppListButtons from '@crema/core/AppListView/ListButtons';
 import {Space} from 'antd';
 
-export default function VendorOrderList({loading, vendorOrderList}) {
+export default function OrderList({loading, vendorOrderList}) {
   const {AppEditButton, AppViewButton} = AppListButtons;
   const columns = [
     {
@@ -52,7 +52,7 @@ export default function VendorOrderList({loading, vendorOrderList}) {
   ];
   return (
     <AppListView
-      title='Vendor'
+      title='Order'
       columns={columns}
       data={vendorOrderList}
       loading={loading}
@@ -60,7 +60,7 @@ export default function VendorOrderList({loading, vendorOrderList}) {
   );
 }
 
-VendorOrderList.propTypes = {
+OrderList.propTypes = {
   vendorOrderList: PropTypes.array,
   loading: PropTypes.bool,
 };
