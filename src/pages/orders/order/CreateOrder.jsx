@@ -11,11 +11,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import AppCrudHeader from '@crema/core/AppCrudHeader';
 import {
   onGetList,
-  onGetSingleRecordAsync,
+  onGetSingleVendorOrder,
   onPost,
   onUpdateRecord,
 } from 'redux/actions';
 import {useNavigate, useParams} from 'react-router-dom';
+import AppsContainer from '@crema/core/AppsContainer';
 
 export default function CreateOrder() {
   const {
@@ -29,22 +30,22 @@ export default function CreateOrder() {
   const navigate = useNavigate();
   const [vendorForm] = Form.useForm();
   const {driverList, vendorPriceList} = useSelector(({general}) => general);
-  const {vendorList} = useSelector(({marketing}) => marketing);
+  const {vendorList,singleorder} = useSelector(({marketing}) => marketing);
   const {loading} = useSelector(({common}) => common);
-  const [singleOrder, setSingleOrder] = useState(null);
+  // const [singleOrder, setSingleOrder] = useState(null);
   const {id} = useParams();
   useEffect(async () => {
     if (id) {
-      const record = await onGetSingleRecordAsync(id);
-      const data = record.data?.data;
-      //dispatch(onGetSingleVendorOrder(id, record));
-      console.log(data);
-      setSingleOrder(data);
-      if (record) vendorForm.setFieldsValue(data);
+      // const record = await onGetSingleRecordAsync(id);
+      // const data = record.data?.data;
+      dispatch(onGetSingleVendorOrder(id));
+      // console.log(data);
+      // setSingleOrder(data);
+      if (singleorder) vendorForm.setFieldsValue(singleorder);
     }
     dispatch(onGetList('Vendor', GET_VENDORS));
     dispatch(onGetList('Driver', GET_DRIVERS));
-  }, [id]);
+  }, [id,singleorder===null]);
   const handleVendorPrice = (value) => {
     getPrices(value);
   };
@@ -65,9 +66,11 @@ export default function CreateOrder() {
   const driverOptions = driverList.map((x) => {
     return {id: x.id, name: x.name};
   });
-  console.log('singleOrder', singleOrder);
+  console.log('singleOrder', singleorder);
   const onFinish = (values) => {
+
     if (id) {
+      debugger;
       let newValues = {...values, id: id};
       dispatch(onUpdateRecord(id, 'Order', newValues, navigate));
     } else {
@@ -76,6 +79,7 @@ export default function CreateOrder() {
   };
   const deliveryType = Form.useWatch('deliveryType', vendorForm);
   return (
+    <AppsContainer title="Vendor Order" type='right' fullView>
     <div className='mail-detail'>
       <Form
         name='basic'
@@ -94,6 +98,7 @@ export default function CreateOrder() {
           title='Vendor Order'
           loading={loading}
         />
+        <div className='mail-detail-body'>
         <Row>
           <Col span={12}>
             <AppSelectControl
@@ -149,6 +154,7 @@ export default function CreateOrder() {
               type='date'
               name='deliveryDate'
               required={true}
+              format="yyyy-MM-dd"
             />
             <AppSwitchControl
               label='PickUp location Same'
@@ -180,7 +186,9 @@ export default function CreateOrder() {
             />
           </Col>
         </Row>
+        </div>
       </Form>
     </div>
+  </AppsContainer>
   );
 }

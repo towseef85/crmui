@@ -48,16 +48,15 @@ export const onPost=(values,controller,action,formName)=>{
     };
   };
 
-  export const onGetSingleRecord = (controller,id,setState) => {
+  export const onGetSingleRecord = (controller,id,action) => {
     return (dispatch) => {
       dispatch({type: FETCH_START});
       jwtAxios
         .get(`${controller}/${id}`)
         .then((data) => {
           if (data.status === 200) {
-            console.log('API Hit', data.data);
             dispatch({type: FETCH_SUCCESS});
-            setState(data.data.data)
+            dispatch({type:action, payload:data.data?.data})
           } else {
             dispatch({
               type: FETCH_ERROR,

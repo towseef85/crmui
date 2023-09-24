@@ -28,7 +28,7 @@ export const onGetVendors = () => {
    return  jwtAxios.get(`Order/${id}`)
    
   }
-  export const onGetSingleVendorOrder=(id,setState)=>{
+  export const onGetSingleVendorOrder=(id)=>{
     return (dispatch) => {
       dispatch({type: FETCH_START});
       jwtAxios
@@ -37,8 +37,6 @@ export const onGetVendors = () => {
           if (data.status === 200) {
               
             dispatch({type: GET_VENDORORDERSINGLE, payload: data.data?.data});
-            setState = data.data?.data
-            console.log("setState",setState)
             jwtAxios.get(`Vendor/GetVendorPrices/${data.data.data.vendorId}`)
             .then((data)=>{
               if(data.status===200){

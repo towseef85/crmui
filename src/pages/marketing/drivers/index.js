@@ -17,7 +17,7 @@ export default function Drivers() {
   useEffect(()=>{
     if(id) dispatch(onGetSingleRecord('Driver',id,setSingleDriver))
     dispatch(onGetList('Driver',GET_DRIVERS))
-  },[])
+  },[id])
   const onGetMainComponent =()=>{
     if(id){    
       return <DriverDetails id={id} loading={loading} singleDriver={singleDriver}/>

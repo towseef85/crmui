@@ -9,9 +9,8 @@ const AppDatePickerControl=({label, name, required=false, ...rest})=>{
       <Form.Item
       label={label}
       name={name}
-      getValueProps={(value) => {
-        return { value: moment(value) };
-      }}
+      getValueProps={(i)=> ({value:moment(i,'DD/MM/YYYY')})}
+      valuePropName={'date'}
       rules={[
         {
           required:required,
@@ -20,7 +19,7 @@ const AppDatePickerControl=({label, name, required=false, ...rest})=>{
       ]}
      {...rest}
     >
-      <DatePicker style={{width: '100%'}} format='DD/M/YYYY' />
+      <DatePicker style={{width: '100%'}}  format='DD/MM/YYYY'/>
     </Form.Item>
   )
 
@@ -178,12 +177,11 @@ const AppInputControl=({
             message:`The Input is not valid ${type}`
         }
       ]}
-      {...rest}
     >
       {isTextArea ? (
         <Input.TextArea rows={rows} placeholder={`Please Enter ${label}`} />
       ) : (
-        <Input type={type} placeholder={`Please Enter ${label}`} />
+        <Input type={type} placeholder={`Please Enter ${label}`} {...rest}/>
       )}
     </Form.Item>
   );
