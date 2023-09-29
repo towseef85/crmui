@@ -74,10 +74,20 @@ export default function CreateVendor() {
             <AppInputControl
               label='Lead Source'
               name='leadSource'
+              required={true}
+            />
+            <AppInputControl
+              label='CR Number'
+              name='crNumber'
               required={false}
             />
           </Col>
           <Col span={12}>
+            <AppInputControl
+              label='VAT Number'
+              name='vatNumber'
+              required={false}
+            />
             <AppInputControl
               label='Store Name'
               name='storeName'

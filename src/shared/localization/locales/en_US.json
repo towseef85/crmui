@@ -640,6 +640,7 @@
   "sidebar.settings.users":"Users",
   "sidebar.orders.vendors":"Vendor Orders",
   "sidebar.orders.drivers":"Driver Orders",
+  "sidebar.orders.status":"Order Status",
   "sidebar.account":"Accounts",
   "sidebar.account.vendor":"Vendor Accounts",
   "sidebar.account.driver":"Driver Accounts",

@@ -16,7 +16,6 @@ const AppHeader = ({isCollapsed, onToggleSidebar}) => {
   const {messages} = useIntl();
   const menuMobile = (
     <Menu>
-      <AppHeaderMessages />
       <AppNotifications />
       <AppLanguageSwitcher />
     </Menu>

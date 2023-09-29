@@ -5,7 +5,7 @@ import AppsContent from '../AppsContainer/AppsContent';
 import AppTableContainer from '../AppTableContainer';
 import { useLocation } from 'react-router-dom';
 
-export default function AppListView({columns, data, title,loading, navigateTo}) {
+export default function AppListView({columns,hideAddButton=true, data, title,loading, navigateTo, additionalButton=null}) {
     const location = useLocation()
     const columnsList =[{
       title:'#',
@@ -23,7 +23,8 @@ export default function AppListView({columns, data, title,loading, navigateTo}) 
     <AppsHeader
     navigateTo={navigateTo ? navigateTo : `${location.pathname}/create`}
     title={title}
-    hideAddButton={true}
+    hideAddButton={hideAddButton}
+    additionalButton={additionalButton}
     />
     <AppsContent
     style={{
@@ -46,5 +47,7 @@ AppListView.propTypes={
     title:PropTypes.string,
     loading:PropTypes.bool,
     data:PropTypes.array,
-    navigateTo:PropTypes.string
+    navigateTo:PropTypes.string,
+    hideAddButton:PropTypes.bool,
+    additionalButton:PropTypes.any
 }

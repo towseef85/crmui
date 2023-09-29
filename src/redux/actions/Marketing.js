@@ -6,7 +6,7 @@ export const onGetVendors = () => {
     return (dispatch) => {
       dispatch({type: FETCH_START});
       jwtAxios
-        .get('Vendor')
+        .get('vendor')
         .then((data) => {
           if (data.status === 200) {
             dispatch({type: FETCH_SUCCESS});

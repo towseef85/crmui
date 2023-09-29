@@ -7,7 +7,7 @@ import { PlusCircleOutlined } from '@ant-design/icons';
 import AppIconButton from '../AppIconButton';
 import { BiArrowBack } from 'react-icons/bi';
 
-const AppsHeader = ({hasSearch=true, navigateTo, icon=<PlusCircleOutlined/>, title, hasBackButton=false, hideAddButton=false, showTitle=false}) => {
+const AppsHeader = ({hasSearch=true, navigateTo, icon=<PlusCircleOutlined/>, title, hasBackButton=false, hideAddButton=false, showTitle=false,additionalButton}) => {
   const navigate = useNavigate()
   return <div className='apps-header'>
     {hasBackButton &&   <AppIconButton
@@ -23,6 +23,7 @@ const AppsHeader = ({hasSearch=true, navigateTo, icon=<PlusCircleOutlined/>, tit
         </div>
         <div className='order-header-right'>
        {hideAddButton &&  <Button type='primary' onClick={()=>navigate(navigateTo)}  icon={icon}>Add {title}</Button>}
+        {additionalButton}
         </div>
     </div>
   </div>;
@@ -38,5 +39,6 @@ AppsHeader.propTypes = {
   title:PropTypes.string,
   hasBackButton:PropTypes.bool,
   hideAddButton:PropTypes.bool,
-  showTitle:PropTypes.bool
+  showTitle:PropTypes.bool,
+  additionalButton:PropTypes.any
 };

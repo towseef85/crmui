@@ -10,9 +10,9 @@ const SITE_URL =
 
 const FACEBOOK_APP_ID = 'XXXXXXXXX';
 
-const defaultTitle = 'Crema-Ant Design admin Template';
+const defaultTitle = 'CRM';
 const defaultDescription =
-  'Crema Ant is an Ant design based admin template. buid with CRA all ant library. ';
+  'FAZZA CRM ';
 const defaultImage =
   'https://firebasestorage.googleapis.com/v0/b/crema-demo.appspot.com/o/logo512.png?alt=media';
 const defaultTwitter = '@crema';
@@ -30,8 +30,8 @@ const AppPageMetadata = ({children, ...rest}) => {
       noCrawl,
       published = '01-05-2021',
       updated,
-      category = 'admin Template, admin Dashboard, ',
-      tags = 'admin Template, admin Dashboard, CRA, Antd, Ant Design, Less, Create React App, Firebase, Aws Cognito, Jwt-Auth, Mail App, Todo App, ',
+      category = 'CRM For Delivery Business ',
+      tags = 'CRM For Delivery Business ',
     },
     pathname,
   ) => {

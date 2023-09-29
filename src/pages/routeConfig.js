@@ -1,6 +1,6 @@
 import React from 'react';
 import { BiGroup, BiTrip, BiSolidUserAccount, BiUser} from 'react-icons/bi';
-import { MdOutlineAnalytics, MdOutlineDeliveryDining, MdPriceCheck } from 'react-icons/md';
+import { MdOutlineAnalytics, MdOutlineDeliveryDining, MdPriceCheck, MdReorder } from 'react-icons/md';
 import {TbTruckDelivery} from 'react-icons/tb'
 
 const routesConfig = [
@@ -56,7 +56,8 @@ const routesConfig = [
         type: 'item',
         icon: <MdOutlineDeliveryDining />,
         path: '/order/driverorders',
-      },
+      }
+     
     ],
   },
   {
@@ -72,6 +73,14 @@ const routesConfig = [
         type: 'item',
         icon: <MdPriceCheck />,
         path: '/setting/prices',
+      },
+      {
+        id: 'orders.status',
+        title: 'Order Status',
+        messageId: 'sidebar.orders.status',
+        type: 'item',
+        icon: <MdReorder />,
+        path: '/order/orderstatus',
       },
       {
         id: 'settings.trips',

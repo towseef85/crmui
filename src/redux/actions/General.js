@@ -78,7 +78,7 @@ export const onPost=(values,controller,action,formName)=>{
         .then((data) => {
           if (data.status === 200) {
             dispatch({type: FETCH_SUCCESS});
-            navigate(-1)
+            navigate ? navigate(-1) : null
             dispatch({type:SHOW_MESSAGE, payload:`${controller} Updated Successfully!`})
           } else {
             dispatch({
