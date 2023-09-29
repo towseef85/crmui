@@ -39,7 +39,7 @@ export default function OrderList({loading, vendorOrderList,orderStatusList}) {
       dataIndex: 'orderHistory',
       key: 'orderHistory',
       render: (orderHistory) => (
-        <>{orderHistory[0].orderStatus.engName}</>
+        <>{orderHistory[0]?.orderStatus.engName}</>
       ),
     },
     {

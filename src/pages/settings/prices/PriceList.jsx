@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppListView from '@crema/core/AppListView';
 import {Tag} from 'antd';
+import AppListButtons from '@crema/core/AppListView/ListButtons';
 
 export default function PriceList({priceList, loading}) {
+
+  const {AppEditButton} = AppListButtons;
   const columns = [
     {
       title: 'KM',
@@ -22,6 +25,13 @@ export default function PriceList({priceList, loading}) {
       render: (data) =>
         data ? <Tag color='blue'>Yes</Tag> : <Tag color='red'>No</Tag>,
     },
+    {
+      title: 'Actions',
+      key: 'id',
+      render: (data) => 
+          <AppEditButton 
+          editTooltiptitle='Edit Price' data={data.id} />
+    }
   ];
   return (
     <AppListView

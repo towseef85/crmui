@@ -133,19 +133,25 @@ export default function CreateOrder() {
             {deliveryType === 1 && (
               <>
                 <AppInputControl
-                  min={2}
+                  min={1}
                   label='COD Charge'
                   name='codCharges'
                   required={deliveryType === 1}
                 />
                 <AppInputControl
-                  min={2}
+                  min={1}
                   label='Order Amount'
                   name='orderAmount'
                   required={deliveryType === 1}
                 />
               </>
             )}
+              <AppInputControl
+              min={4}
+              label='Remarks'
+              name='remarks'
+              isTextArea={true}
+            />
           </Col>
 
           <Col span={12}>
@@ -172,18 +178,24 @@ export default function CreateOrder() {
                 required={!isSamePickUpAddress}
               />
             )}
-            <AppInputControl
-              min={4}
-              label='Remarks'
-              name='remarks'
-              isTextArea={true}
-            />
+            
             <AppInputNumberControl
               defaultValue={0}
               min={0}
               label='Extra Charges'
               name='extraCharges'
             />
+            <AppInputControl
+              min={3}
+              label='Customer Name'
+              name='customerName'
+            />
+            <AppInputControl
+              min={3}
+              label='Customer Number'
+              name='customerNumber'
+            />
+           
           </Col>
         </Row>
         </div>

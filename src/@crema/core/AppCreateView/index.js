@@ -61,7 +61,6 @@ export default function AppCreateView({
     
   };
   const onFinishFailed = () => {};
-  console.log("initialValues",initialValues);
   if(initialValues) formName.setFieldsValue(initialValues)
   return (
     <>
@@ -85,11 +84,11 @@ export default function AppCreateView({
             <div className='apps-header'>
               <AppIconButton
                 className='mail-detail-arrow'
-                title={`Add ${title}`}
+                title={id ? `Update ${title}` :`Add ${title}`}
                 icon={<BiArrowBack />}
                 onClick={() => navigate(-1)}
               />
-              <h5 className='mb-0 text-truncate'>{`Add ${title}`}</h5>
+              <h5 className='mb-0 text-truncate'>{id ? `Update ${title}` :`Add ${title}`}</h5>
               <div className='mail-detail-header-action'>
                 <Space>
                   <Button
