@@ -1,12 +1,13 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import AppControls from '@crema/core/AppControls';
 import {GET_DRIVERORDERS, GET_DRIVERS} from 'shared/constants/ActionTypes';
-import {Button, Col, Form, Row, message} from 'antd';
+import {Button, Col, Divider, Form, Row, Typography, message} from 'antd';
 import {useDispatch, useSelector} from 'react-redux';
 import AppCrudHeader from '@crema/core/AppCrudHeader';
 import {useParams} from 'react-router-dom';
 import AppsContainer from '@crema/core/AppsContainer';
 import {onGetList, onGetSingleRecord} from 'redux/actions';
+import DriverOrdersPopup from './DriverOrdersPopup';
 
 export default function AddDriverPayment() {
   const {AppInputControl, AppSelectControl} = AppControls;
@@ -14,7 +15,9 @@ export default function AddDriverPayment() {
   //const navigate = useNavigate();
   const {id} = useParams();
   const [orderdriverForm] = Form.useForm();
-  const {driverList} = useSelector(({general}) => general);
+  const [showPopUp, setShowPopUp] = useState(false);
+  const [selectedOrders, setSelectedOrders] = useState([]);
+  const {driverList, driverOrderList} = useSelector(({general}) => general);
   const {loading} = useSelector(({common}) => common);
   useEffect(async () => {
     // if (id) {
@@ -38,6 +41,8 @@ export default function AddDriverPayment() {
   const driverId = Form.useWatch('driverId', orderdriverForm);
   const handleDriverOrder = () => {
     if (!driverId) return message.error('Please Select driver');
+    onGetSingleRecord(`Driver/GetUnPaidOrder`, driverId, GET_DRIVERORDERS);
+    setShowPopUp(true);
   };
   return (
     <AppsContainer title='Driver Order Payment' type='right' fullView>
@@ -62,23 +67,6 @@ export default function AddDriverPayment() {
           <div className='mail-detail-body'>
             <Row>
               <Col span={12}>
-                <AppInputControl
-                  disabled={true}
-                  label='Payment Number'
-                  name='number'
-                />
-                <AppInputControl
-                  disabled={true}
-                  label='Total Amount'
-                  name='totalAmount'
-                />
-                <AppInputControl
-                  isTextArea={true}
-                  label='Remarks'
-                  name='remarks'
-                />
-              </Col>
-              <Col span={12}>
                 <AppSelectControl
                   disabled={id}
                   label='Driver'
@@ -86,6 +74,19 @@ export default function AddDriverPayment() {
                   required={true}
                   onChange={handleDriverChange}
                   options={driverOptions}
+                />
+
+                <AppInputControl
+                  isTextArea={true}
+                  label='Remarks'
+                  name='remarks'
+                />
+              </Col>
+              <Col span={12}>
+                <AppInputControl
+                  disabled={true}
+                  label='Total Amount'
+                  name='totalAmount'
                 />
                 <AppInputControl
                   disabled={true}
@@ -97,14 +98,27 @@ export default function AddDriverPayment() {
                   label='Balance'
                   name='balance'
                 />
+              </Col>
+            </Row>
+            <Col span={22} offset={1}>
+              <Divider />
+              <Row justify='space-between'>
+                <Typography.Title level={2}>Order Details</Typography.Title>
                 <Button onClick={handleDriverOrder} type='primary'>
                   Select Orders
                 </Button>
-              </Col>
-            </Row>
+              </Row>
+            </Col>
           </div>
         </Form>
       </div>
+      <DriverOrdersPopup
+        driverOrderList={driverOrderList}
+        showPopUp={showPopUp}
+        setShowPopUp={setShowPopUp}
+        selectedOrders={selectedOrders}
+        setSelectedOrders={setSelectedOrders}
+      />
     </AppsContainer>
   );
 }

@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import AppListView from '@crema/core/AppListView';
 import AppListButtons from '@crema/core/AppListView/ListButtons';
-import {Button, Space, Tooltip} from 'antd';
-import { CloudUploadOutlined } from '@ant-design/icons';
+import {Button, Space} from 'antd';
+import {CloudUploadOutlined} from '@ant-design/icons';
 import OrderStatusUpdate from './OrderStatusUpdate';
 
-export default function OrderList({loading, vendorOrderList,orderStatusList}) {
+export default function OrderList({loading, vendorOrderList, orderStatusList}) {
   const {AppEditButton, AppViewButton} = AppListButtons;
-  const [showPopUp, setShowPopUp] = useState({show:false, id:null})
+  const [showPopUp, setShowPopUp] = useState({show: false, id: null});
   const columns = [
     {
       title: 'Order No',
       dataIndex: 'orderNumber',
       key: 'orderNumber',
-      render:(orderNumber)=><>{`${orderNumber.slice(0,8)}...`}</>
+      render: (orderNumber) => <>{`${orderNumber.slice(0, 8)}...`}</>,
     },
     {
       title: 'vendor Name',
@@ -38,9 +38,7 @@ export default function OrderList({loading, vendorOrderList,orderStatusList}) {
       title: 'Status',
       dataIndex: 'orderHistory',
       key: 'orderHistory',
-      render: (orderHistory) => (
-        <>{orderHistory[0].orderStatus.engName}</>
-      ),
+      render: (orderHistory) => <>{orderHistory[0]?.orderStatus.engName}</>,
     },
     {
       title: 'Delivery Date',
@@ -52,35 +50,31 @@ export default function OrderList({loading, vendorOrderList,orderStatusList}) {
       key: 'id',
       render: (data) => (
         <Space>
-             <Button
-        type="text"
-        onClick={()=>setShowPopUp({show:true, id:data.id})}
-        icon={<CloudUploadOutlined  style={{ color: "#D18700" }} />}
-      />
-          <AppEditButton editTooltiptitle='Edit Driver' data={data.id} />
-          <AppViewButton detailsTooltiptitle='Driver Details' data={data.id} />
-          <Tooltip title="Update Order Status">
-       
-          </Tooltip>
+          <Button
+            type='text'
+            onClick={() => setShowPopUp({show: true, id: data.id})}
+            icon={<CloudUploadOutlined style={{color: '#D18700'}} />}
+          />
+          <AppEditButton editTooltiptitle='Edit Order' data={data.id} />
+          <AppViewButton detailsTooltiptitle='Order Details' data={data.id} />
         </Space>
       ),
     },
   ];
   return (
     <>
-    
-    <AppListView
-      title='Order'
-      columns={columns}
-      data={vendorOrderList}
-      loading={loading}
-    />
-    <OrderStatusUpdate
-    showPopUp={showPopUp}
-    setShowPopUp={setShowPopUp}
-    loading={loading}
-    orderStatusList={orderStatusList}
-    />
+      <AppListView
+        title='Order'
+        columns={columns}
+        data={vendorOrderList}
+        loading={loading}
+      />
+      <OrderStatusUpdate
+        showPopUp={showPopUp}
+        setShowPopUp={setShowPopUp}
+        loading={loading}
+        orderStatusList={orderStatusList}
+      />
     </>
   );
 }
@@ -88,5 +82,5 @@ export default function OrderList({loading, vendorOrderList,orderStatusList}) {
 OrderList.propTypes = {
   vendorOrderList: PropTypes.array,
   loading: PropTypes.bool,
-  orderStatusList:PropTypes.array
+  orderStatusList: PropTypes.array,
 };
