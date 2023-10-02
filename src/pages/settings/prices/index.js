@@ -8,7 +8,9 @@ import AppPageMetadata from '@crema/core/AppPageMetadata'
 import AppsContainer from '@crema/core/AppsContainer'
 import {useParams} from 'react-router-dom';
 
+
 export default function Prices() {
+
   const dispatch = useDispatch()
   const {priceList} = useSelector(({general})=> general)
   const {loading} = useSelector(({common}) => common);

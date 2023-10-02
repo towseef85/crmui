@@ -39,6 +39,7 @@ export default function OrderList({loading, vendorOrderList, orderStatusList}) {
       dataIndex: 'orderHistory',
       key: 'orderHistory',
       render: (orderHistory) => <>{orderHistory[0]?.orderStatus.engName}</>,
+
     },
     {
       title: 'Delivery Date',

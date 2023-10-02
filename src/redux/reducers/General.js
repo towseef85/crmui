@@ -14,7 +14,8 @@ DELETE_VENDORORDER,
 GET_ORDERSTATUS,
 GET_DRIVERORDERS,
 POST_ORDERSTATUS,
-GET_SINGLEORDERSTATUS
+GET_SINGLEORDERSTATUS,
+GET_SINGLEPRICE
 } from "../../shared/constants/ActionTypes";
 
 export const VIEW_TYPE = Object.freeze({LIST: 1, GRID: 2});
@@ -26,11 +27,18 @@ const initialState = {
     vendorPriceList:[],
     orderStatusList:[],
     driverOrderList:[],
-    singleOrderStatus:{}
+    singleOrderStatus:{},
+    singlePrice:null
+
   }
 
   const generalReducer=(state = initialState, action)=>{
     switch (action.type) {
+      case GET_SINGLEPRICE:{
+        return{
+          ...state,singlePrice:action.payload
+        }
+      }
       case GET_SINGLEORDERSTATUS:{
         return{
           ...state, singleOrderStatus:action.payload
