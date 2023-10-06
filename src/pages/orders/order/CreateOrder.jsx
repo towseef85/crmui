@@ -30,7 +30,7 @@ export default function CreateOrder() {
   const navigate = useNavigate();
   const [vendorForm] = Form.useForm();
   const {driverList, vendorPriceList} = useSelector(({general}) => general);
-  const {vendorList,singleorder} = useSelector(({marketing}) => marketing);
+  const {vendorList, singleorder} = useSelector(({marketing}) => marketing);
   const {loading} = useSelector(({common}) => common);
   // const [singleOrder, setSingleOrder] = useState(null);
   const {id} = useParams();
@@ -45,7 +45,7 @@ export default function CreateOrder() {
     }
     dispatch(onGetList('Vendor', GET_VENDORS));
     dispatch(onGetList('Driver', GET_DRIVERS));
-  }, [id,singleorder===null]);
+  }, [id, singleorder === null]);
   const handleVendorPrice = (value) => {
     getPrices(value);
   };
@@ -68,7 +68,6 @@ export default function CreateOrder() {
   });
   console.log('singleOrder', singleorder);
   const onFinish = (values) => {
-
     if (id) {
       debugger;
       let newValues = {...values, id: id};
@@ -79,128 +78,135 @@ export default function CreateOrder() {
   };
   const deliveryType = Form.useWatch('deliveryType', vendorForm);
   return (
-    <AppsContainer title="Vendor Order" type='right' fullView>
-    <div className='mail-detail'>
-      <Form
-        name='basic'
-        form={vendorForm}
-        onFinish={onFinish}
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        autoComplete='off'>
-        <AppCrudHeader
-          formName={vendorForm}
-          id={id}
-          title='Vendor Order'
-          loading={loading}
-        />
-        <div className='mail-detail-body'>
-        <Row>
-          <Col span={12}>
-            <AppSelectControl
-              disabled={id}
-              label='Vendor'
-              name='vendorId'
-              required={true}
-              onChange={handleVendorPrice}
-              options={vendorOptions}
-            />
-            <AppSelectControl
-              label='Vendor Price'
-              name='priceId'
-              required={true}
-              options={vendorprice}
-            />
-            <AppSelectControl
-              label='Driver'
-              name='driverId'
-              required={true}
-              options={driverOptions}
-            />
-            <AppSelectControl
-              label='Delivery Type'
-              name='deliveryType'
-              required={true}
-              options={[
-                {id: 1, name: 'COD'},
-                {id: 0, name: 'Online'},
-              ]}
-            />
-            {deliveryType === 1 && (
-              <>
-                <AppInputControl
-                  min={1}
-                  label='COD Charge'
-                  name='codCharges'
-                  required={deliveryType === 1}
+    <AppsContainer title='Vendor Order' type='right' fullView>
+      <div className='mail-detail'>
+        <Form
+          name='basic'
+          form={vendorForm}
+          onFinish={onFinish}
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          autoComplete='off'>
+          <AppCrudHeader
+            formName={vendorForm}
+            id={id}
+            title='Vendor Order'
+            loading={loading}
+          />
+          <div className='mail-detail-body'>
+            <Row>
+              <Col span={12}>
+                {id && (
+                  <AppInputControl
+                    disabled={id}
+                    min={1}
+                    label='Order Number'
+                    name='orderNumber'
+                  />
+                )}
+                <AppSelectControl
+                  disabled={id}
+                  label='Vendor'
+                  name='vendorId'
+                  required={true}
+                  onChange={handleVendorPrice}
+                  options={vendorOptions}
                 />
-                <AppInputControl
-                  min={1}
-                  label='Order Amount'
-                  name='orderAmount'
-                  required={deliveryType === 1}
+                <AppSelectControl
+                  label='Vendor Price'
+                  name='priceId'
+                  required={true}
+                  options={vendorprice}
                 />
-              </>
-            )}
-              <AppInputControl
-              min={4}
-              label='Remarks'
-              name='remarks'
-              isTextArea={true}
-            />
-          </Col>
+                <AppSelectControl
+                  label='Driver'
+                  name='driverId'
+                  required={true}
+                  options={driverOptions}
+                />
+                <AppSelectControl
+                  label='Delivery Type'
+                  name='deliveryType'
+                  required={true}
+                  options={[
+                    {id: 1, name: 'COD'},
+                    {id: 0, name: 'Online'},
+                  ]}
+                />
+                {deliveryType === 1 && (
+                  <>
+                    <AppInputControl
+                      min={1}
+                      label='COD Charge'
+                      name='codCharges'
+                      required={deliveryType === 1}
+                    />
+                    <AppInputControl
+                      min={1}
+                      label='Order Amount'
+                      name='orderAmount'
+                      required={deliveryType === 1}
+                    />
+                  </>
+                )}
+                <AppInputControl
+                  min={4}
+                  label='Remarks'
+                  name='remarks'
+                  isTextArea={true}
+                />
+              </Col>
 
-          <Col span={12}>
-            <AppInputControl
-              label='Order Date'
-              type='date'
-              name='deliveryDate'
-              required={true}
-              format="yyyy-MM-dd"
-            />
-            <AppSwitchControl
-              label='PickUp location Same'
-              name='isSame'
-              valuePropName='checked'
-              initialValue={isSamePickUpAddress}
-              onChange={(e) => setIsSamePickUpAddress(e)}
-            />
-            {!isSamePickUpAddress && (
-              <AppInputControl
-                label='PickUp Location'
-                min={10}
-                isTextArea={true}
-                name='pickupLocation'
-                required={!isSamePickUpAddress}
-              />
-            )}
-            
-            <AppInputNumberControl
-              defaultValue={0}
-              min={0}
-              label='Extra Charges'
-              name='extraCharges'
-            />
-            <AppInputControl
-              min={3}
-              label='Customer Name'
-              name='customerName'
-            />
-            <AppInputControl
-              min={3}
-              label='Customer Number'
-              name='customerNumber'
-            />
-           
-          </Col>
-        </Row>
-        </div>
-      </Form>
-    </div>
-  </AppsContainer>
+              <Col span={12}>
+                <AppInputControl
+                  label='Order Date'
+                  type='date'
+                  name='deliveryDate'
+                  required={true}
+                  format='yyyy-MM-dd'
+                />
+                <AppSwitchControl
+                  label='PickUp location Same'
+                  name='isSame'
+                  valuePropName='checked'
+                  initialValue={isSamePickUpAddress}
+                  onChange={(e) => setIsSamePickUpAddress(e)}
+                />
+                {!isSamePickUpAddress && (
+                  <AppInputControl
+                    label='PickUp Location'
+                    min={10}
+                    isTextArea={true}
+                    name='pickupLocation'
+                    required={!isSamePickUpAddress}
+                  />
+                )}
+
+                <AppInputNumberControl
+                  defaultValue={0}
+                  min={0}
+                  label='Extra Charges'
+                  name='extraCharges'
+                />
+                <AppInputControl
+                  min={3}
+                  label='Customer Name'
+                  name='customerName'
+                />
+                <AppInputControl
+                  min={3}
+                  label='Customer Number'
+                  name='customerNumber'
+                />
+              </Col>
+            </Row>
+          </div>
+        </Form>
+      </div>
+    </AppsContainer>
   );
 }
