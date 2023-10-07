@@ -632,6 +632,7 @@
   "sidebar.orders.vendors":"Vendor Orders",
   "sidebar.orders.drivers":"Driver Orders",
   "sidebar.orders.status":"Order Status",
+  "sidebar.orders.orderrequest":"Order Request",
   "sidebar.settings":"Settings",
   "sidebar.settings.prices":"Prices",
   "sidebar.settings.trips":"Configurations",

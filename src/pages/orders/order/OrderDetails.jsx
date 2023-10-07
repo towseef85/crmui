@@ -58,6 +58,8 @@ export default function OrderDetails({singleOrder,id}) {
       <Descriptions.Item label="Store name">{singleOrder.vendor.storeName}</Descriptions.Item>
       <Descriptions.Item label="Pickup Address">{singleOrder.vendor.pickupAddress}</Descriptions.Item>
       <Descriptions.Item label="Mobile Number">{singleOrder.driver.name}</Descriptions.Item>
+      <Descriptions.Item label="Customer Name">{singleOrder.customerName}</Descriptions.Item>
+      <Descriptions.Item label="Customer Number">{singleOrder.customerNumber}</Descriptions.Item>
       <Descriptions.Item label="Order Price">{`${10}KM - ${singleOrder.prices.prices}SAR`}</Descriptions.Item>
       <Descriptions.Item label="Order Date">{singleOrder.deliveryDate}</Descriptions.Item>
       <Descriptions.Item label="Time Slot">{singleOrder.deliveryType === 1 ? "COD":"Online"}</Descriptions.Item>

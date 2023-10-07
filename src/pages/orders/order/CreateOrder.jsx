@@ -2,11 +2,12 @@ import React, {useEffect, useState} from 'react';
 import AppControls from '@crema/core/AppControls';
 import {
   GET_DRIVERS,
+  GET_ORDERREQUEST,
   GET_VENDORPRICES,
   GET_VENDORS,
   POST_VENDORORDER,
 } from 'shared/constants/ActionTypes';
-import {Col, Form, Row} from 'antd';
+import {Button, Col, Form, Row} from 'antd';
 import {useDispatch, useSelector} from 'react-redux';
 import AppCrudHeader from '@crema/core/AppCrudHeader';
 import {
@@ -17,6 +18,7 @@ import {
 } from 'redux/actions';
 import {useNavigate, useParams} from 'react-router-dom';
 import AppsContainer from '@crema/core/AppsContainer';
+import OrderRequestPopUp from './OrderRequestPopUp';
 
 export default function CreateOrder() {
   const {
@@ -27,9 +29,10 @@ export default function CreateOrder() {
   } = AppControls;
   const dispatch = useDispatch();
   const [isSamePickUpAddress, setIsSamePickUpAddress] = useState(true);
+  const [showPopUp, setShowPopUp] = useState(false)
   const navigate = useNavigate();
   const [vendorForm] = Form.useForm();
-  const {driverList, vendorPriceList} = useSelector(({general}) => general);
+  const {driverList, vendorPriceList, orderRequestList} = useSelector(({general}) => general);
   const {vendorList, singleorder} = useSelector(({marketing}) => marketing);
   const {loading} = useSelector(({common}) => common);
   // const [singleOrder, setSingleOrder] = useState(null);
@@ -47,6 +50,7 @@ export default function CreateOrder() {
     dispatch(onGetList('Driver', GET_DRIVERS));
   }, [id, singleorder === null]);
   const handleVendorPrice = (value) => {
+    
     getPrices(value);
   };
   const getPrices = (value) => {
@@ -76,6 +80,10 @@ export default function CreateOrder() {
       dispatch(onPost(values, 'Order', POST_VENDORORDER, vendorForm));
     }
   };
+  const handleOrderRequest=()=>{
+    dispatch(onGetList('OrderRequest',GET_ORDERREQUEST))
+    setShowPopUp(true)
+  }
   const deliveryType = Form.useWatch('deliveryType', vendorForm);
   return (
     <AppsContainer title='Vendor Order' type='right' fullView>
@@ -96,6 +104,7 @@ export default function CreateOrder() {
             id={id}
             title='Vendor Order'
             loading={loading}
+            additionButton={<Button onClick={handleOrderRequest} type='primary'>Get Order Requests</Button>}
           />
           <div className='mail-detail-body'>
             <Row>
@@ -207,6 +216,11 @@ export default function CreateOrder() {
           </div>
         </Form>
       </div>
+      <OrderRequestPopUp
+      showPopUp={showPopUp}
+      setShowPopUp={setShowPopUp}
+      orderRequestList={orderRequestList.filter(x=>x?.orderDone === false)}
+      />
     </AppsContainer>
   );
 }

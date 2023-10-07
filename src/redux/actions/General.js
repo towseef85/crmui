@@ -93,6 +93,12 @@ export const onPost=(values,controller,action,formName)=>{
     };
   }
 
+  export const GetUpdateData=(id, controller)=>{
+   return jwtAxios
+    .get(`${controller}/${id}`)
+    
+  }
+
   export const onDeleteRecord = (id,controller) => {
     return (dispatch) => {
       dispatch({type: FETCH_START});

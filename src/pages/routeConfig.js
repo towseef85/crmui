@@ -42,6 +42,14 @@ const routesConfig = [
     type: 'group',
     children: [
       {
+        id: 'orders.orderrequest',
+        title: 'Order Request',
+        messageId: 'sidebar.orders.orderrequest',
+        type: 'item',
+        icon: <BiGroup />,
+        path: '/order/orderrequest',
+      },
+      {
         id: 'orders.vendors',
         title: 'Vendors',
         messageId: 'sidebar.orders.vendors',
