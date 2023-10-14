@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const jwtAxios = axios.create({
- baseURL: 'https://localhost:7103/api/', //YOUR_API_URL HERE
-  //baseURL: 'http://zameer7-001-site2.ftempurl.com/api/', //YOUR_API_URL HERE
+// baseURL: 'https://localhost:7103/api/', //YOUR_API_URL HERE
+  baseURL: 'http://zameer7-001-site2.ftempurl.com/api/', //YOUR_API_URL HERE
   headers: {
     'Content-Type': 'application/json',
   },

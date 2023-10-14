@@ -29,10 +29,13 @@ export default function CreateOrder() {
   } = AppControls;
   const dispatch = useDispatch();
   const [isSamePickUpAddress, setIsSamePickUpAddress] = useState(true);
-  const [showPopUp, setShowPopUp] = useState(false)
+  const [showPopUp, setShowPopUp] = useState(false);
+  const [orderrequests, setOrderrequests] = useState(null);
   const navigate = useNavigate();
   const [vendorForm] = Form.useForm();
-  const {driverList, vendorPriceList, orderRequestList} = useSelector(({general}) => general);
+  const {driverList, vendorPriceList, orderRequestList} = useSelector(
+    ({general}) => general,
+  );
   const {vendorList, singleorder} = useSelector(({marketing}) => marketing);
   const {loading} = useSelector(({common}) => common);
   // const [singleOrder, setSingleOrder] = useState(null);
@@ -50,7 +53,6 @@ export default function CreateOrder() {
     dispatch(onGetList('Driver', GET_DRIVERS));
   }, [id, singleorder === null]);
   const handleVendorPrice = (value) => {
-    
     getPrices(value);
   };
   const getPrices = (value) => {
@@ -77,13 +79,30 @@ export default function CreateOrder() {
       let newValues = {...values, id: id};
       dispatch(onUpdateRecord(id, 'Order', newValues, navigate));
     } else {
+      let orderRequestId = orderrequests.id;
+      console.log('orderRequestId', orderRequestId);
       dispatch(onPost(values, 'Order', POST_VENDORORDER, vendorForm));
     }
   };
-  const handleOrderRequest=()=>{
-    dispatch(onGetList('OrderRequest',GET_ORDERREQUEST))
-    setShowPopUp(true)
-  }
+  const handleOrderRequest = () => {
+    dispatch(onGetList('OrderRequest', GET_ORDERREQUEST));
+    setShowPopUp(true);
+  };
+  const handleOrderRequestAdd = (data) => {
+    getPrices(data.vendorId);
+    console.log('order request data', data);
+    setOrderrequests(data);
+    vendorForm.setFieldsValue({
+      vendorId: data.vendorId,
+      deliveryType: data.deliveryType,
+      customerName: data.customerName,
+      customerNumber: data.customerNumber,
+      deliveryDate: data.deliveryDate,
+      codCharges: data.codCharges,
+      orderAmount: data.orderAmount,
+    });
+    setShowPopUp(false);
+  };
   const deliveryType = Form.useWatch('deliveryType', vendorForm);
   return (
     <AppsContainer title='Vendor Order' type='right' fullView>
@@ -104,7 +123,11 @@ export default function CreateOrder() {
             id={id}
             title='Vendor Order'
             loading={loading}
-            additionButton={<Button onClick={handleOrderRequest} type='primary'>Get Order Requests</Button>}
+            additionButton={
+              <Button disabled={id} onClick={handleOrderRequest} type='primary'>
+                Get Order Requests
+              </Button>
+            }
           />
           <div className='mail-detail-body'>
             <Row>
@@ -217,9 +240,12 @@ export default function CreateOrder() {
         </Form>
       </div>
       <OrderRequestPopUp
-      showPopUp={showPopUp}
-      setShowPopUp={setShowPopUp}
-      orderRequestList={orderRequestList.filter(x=>x?.orderDone === false)}
+        showPopUp={showPopUp}
+        setShowPopUp={setShowPopUp}
+        orderRequestList={orderRequestList.filter(
+          (x) => x?.orderDone === false,
+        )}
+        onSelect={handleOrderRequestAdd}
       />
     </AppsContainer>
   );
