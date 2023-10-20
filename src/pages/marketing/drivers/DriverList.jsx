@@ -5,7 +5,7 @@ import AppListButtons from '@crema/core/AppListView/ListButtons';
 import {Space} from 'antd';
 
 export default function DriverList({driverList, loading}) {
-  const {AppEditButton, AppViewButton, AppDeleteButton} = AppListButtons;
+  const {AppEditButton, AppViewButton} = AppListButtons;
   const columns = [
     {
       title: 'Driver Name',
@@ -35,11 +35,11 @@ export default function DriverList({driverList, loading}) {
         <Space>
           <AppEditButton editTooltiptitle='Edit Driver' data={data} />
           <AppViewButton detailsTooltiptitle='Driver Details' data={data} />
-          <AppDeleteButton
+          {/* <AppDeleteButton
             deleteTooltiptitle='Delete Driver'
             data={data}
             onDelete={() => console.log(data)}
-          />
+          /> */}
         </Space>
       ),
     },

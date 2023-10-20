@@ -72,16 +72,18 @@ export default function CreateOrder() {
   const driverOptions = driverList.map((x) => {
     return {id: x.id, name: x.name};
   });
-  console.log('singleOrder', singleorder);
   const onFinish = (values) => {
     if (id) {
       debugger;
       let newValues = {...values, id: id};
       dispatch(onUpdateRecord(id, 'Order', newValues, navigate));
     } else {
-      let orderRequestId = orderrequests.id;
-      console.log('orderRequestId', orderRequestId);
-      dispatch(onPost(values, 'Order', POST_VENDORORDER, vendorForm));
+      if (orderrequests) {
+        let newValues = {...values, orderRequestId: orderrequests.id};
+        dispatch(onPost(newValues, 'Order', POST_VENDORORDER, vendorForm));
+      } else {
+        dispatch(onPost(values, 'Order', POST_VENDORORDER, vendorForm));
+      }
     }
   };
   const handleOrderRequest = () => {
@@ -200,6 +202,11 @@ export default function CreateOrder() {
                   name='deliveryDate'
                   required={true}
                   format='yyyy-MM-dd'
+                />
+                <AppInputControl
+                  label='Order Time'
+                  type='time'
+                  name='deliveryTime'
                 />
                 <AppSwitchControl
                   label='PickUp location Same'

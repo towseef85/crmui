@@ -1,7 +1,7 @@
-import AppCreateView from '@crema/core/AppCreateView';
+//import AppCreateView from '@crema/core/AppCreateView';
 import React, {useState, useEffect} from 'react';
 import AppControls from '@crema/core/AppControls';
-import {Button, Col, Row, message} from 'antd';
+import {Button, Col, Row, message, Form} from 'antd';
 import {POST_VENDORS, GET_PRICES} from 'shared/constants/ActionTypes';
 import {DollarOutlined} from '@ant-design/icons';
 import {onGetList} from 'redux/actions';
@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import VendorPrices from './VendorPrices';
 import {useParams} from 'react-router-dom';
 import {v4 as uuid} from 'uuid';
+import AppForm from '@crema/core/AppForm';
 
 export default function CreateVendor() {
   const {id} = useParams();
@@ -18,7 +19,8 @@ export default function CreateVendor() {
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [vendorPrices, setVendorPrices] = useState([]);
   const [showPopUp, setshowPopUp] = useState(false);
-  const [hasCondition, setHasCondition] = useState(true);
+  const [hasCondition, setHasCondition] = useState(id ? false : true);
+  const [vendorForm] = Form.useForm();
 
   useEffect(() => {
     dispatch(onGetList('Price', GET_PRICES));
@@ -37,15 +39,18 @@ export default function CreateVendor() {
   };
   return (
     <>
-      <AppCreateView
+      <AppForm
         title='Vendor'
+        id={id}
         controller='Vendor'
         action={POST_VENDORS}
         hasCondition={hasCondition}
-        conditionMessage='Please select Prices for vendors'
-        othervalues={{vendorPrice: vendorPrices}}
+        formName={vendorForm}
+        conditionMessage='Please Select Price for vendor'
+        otherValues={{vendorPrices: vendorPrices}}
         additionButton={
           <Button
+            disabled={id}
             type='primary'
             icon={<DollarOutlined />}
             onClick={() => setshowPopUp(true)}>
@@ -112,7 +117,7 @@ export default function CreateVendor() {
             />
           </Col>
         </Row>
-      </AppCreateView>
+      </AppForm>
       <VendorPrices
         openPopUp={showPopUp}
         id={id}

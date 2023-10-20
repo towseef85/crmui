@@ -10,7 +10,7 @@ const Dashboard = React.lazy(() => import('../dashboard'))
 export const marketingPages = [
     {
       permittedRole: RoutePermittedRole.user,
-      path: '/marketing/vendors',
+      path: ['/marketing/vendors','/marketing/vendors/:id'],
       element: <Vendors />,
     },
     {

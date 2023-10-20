@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
- const AppEditButton = ({ editTooltiptitle, data, onEditClick }) => {
+ const AppEditButton = ({ editTooltiptitle, data, onEditClick, ...rest }) => {
   const navigate = useNavigate();
   const location = useLocation()
   return (
@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
         type="text"
         onClick={onEditClick ? onEditClick : () => navigate(`${location.pathname}/create/${data}`)}
         icon={<EditOutlined style={{ color: "#0096FF" }} />}
+        {...rest}
       />
     </Tooltip>
   );

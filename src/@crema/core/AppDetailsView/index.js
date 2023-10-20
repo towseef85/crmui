@@ -1,6 +1,6 @@
 import React from 'react'
 import { BiArrowBack } from 'react-icons/bi'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Button, Space } from 'antd'
 import { CloseOutlined, DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import AppsContent from '../AppsContainer/AppsContent'
@@ -9,8 +9,15 @@ import PropTypes from 'prop-types';
 import AppIconButton from '../AppIconButton'
 import { onDeleteRecord } from 'redux/actions'
 
-export default function AppDetailsView({title,children,navigateTo,id}) {
+export default function AppDetailsView({title,children,navigateTo=null,id, showDelete=false, canEdit=false}) {
     const navigate = useNavigate()
+    const location = useLocation()
+
+    const handleNavigation =(location)=>{
+      const loc = `${location.substring(0,location.lastIndexOf('/'))}/create/${id}`
+      return loc
+    }
+
     const onDelete =()=>{
         try{
             onDeleteRecord(id,'Driver')
@@ -35,11 +42,18 @@ export default function AppDetailsView({title,children,navigateTo,id}) {
                 <Space>
                   <Button
                     type='primary'
-                    onClick={()=>navigate(navigateTo)}
+                    disabled={canEdit}
+                    onClick={()=>
+                      navigate(
+                        navigateTo? navigateTo : 
+                        handleNavigation(location.pathname))}
                     icon={<PlusCircleOutlined />}>
                     
                     {`Update ${title}`}
                   </Button>
+                  {
+                    showDelete &&
+
                   <Button
                     icon={<DeleteOutlined />}
                     onClick={() => onDelete}
@@ -48,6 +62,7 @@ export default function AppDetailsView({title,children,navigateTo,id}) {
                     >
                     Delete
                   </Button>
+                  }
                   <Button
                     icon={<CloseOutlined />}
                     onClick={() => navigate(-1)}
@@ -72,4 +87,6 @@ AppDetailsView.propTypes = {
     title: PropTypes.string,
     id:PropTypes.string,
     navigateTo:PropTypes.string,
+    showDelete:PropTypes.bool,
+    canEdit:PropTypes.bool
 }
